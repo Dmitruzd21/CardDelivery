@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
@@ -27,7 +29,11 @@ public class CardDeliveryTest {
         //Город
         $("[data-test-id=city]").setValue("Москва");
         //Дата (текущая + 3 дня)
-        $("[data-test-id=date]").setValue("13.10.2021");
+        LocalDate today = LocalDate.now();
+        LocalDate todayPlusThreeDays = today.plusDays(3);
+        DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
+        String formattedDate = todayPlusThreeDays.format(formatter);
+        $("[data-test-id=date]").setValue(formattedDate);
         //Фамилия и имя
         $("[data-test-id=name]").setValue("Иванов Сергей");
         //Телефон
