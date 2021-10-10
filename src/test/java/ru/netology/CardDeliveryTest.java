@@ -1,10 +1,13 @@
 package ru.netology;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.conditions.ExactText;
+import com.codeborne.selenide.Selectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Condition.exactText;
@@ -22,18 +25,19 @@ public class CardDeliveryTest {
         //Открытие формы
         open("http://localhost:9999");
         //Город
-        $ ("").setValue("");
+        $("[data-test-id=city]").setValue("Москва");
         //Дата (текущая + 3 дня)
-        $ ("").setValue("");
+        $("[data-test-id=date]").setValue("13.10.2021");
         //Фамилия и имя
-        $ ("").setValue("");
+        $("[data-test-id=name]").setValue("Иванов Сергей");
         //Телефон
-        $ ("").setValue("");
+        $("[data-test-id=phone]").setValue("+791545687354");
         //Чек-бокс
-        $ ("").click();
+        $(".checkbox__control").click();
         //Забронировать
-        $ ("").click();
+        $(Selectors.byText("Забронировать")).click();
         // Всплывающее окно успешно
-        $ ("").shouldHave(exactText(""));
+        $(Selectors.withText("Успешно")).shouldBe (visible, Duration.ofSeconds(15));
+                //(exactText("Встреча успешно забронирована на" + ""));
     }
 }
