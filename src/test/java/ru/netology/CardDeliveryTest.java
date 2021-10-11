@@ -54,7 +54,7 @@ public class CardDeliveryTest {
 
    // Ввод 2 букв в поле город, после чего выбор нужного города из выпадающего списка
     @Test
-    public void shouldOrderCardDelivery2() {
+    public void shouldOrderCardDeliveryWithCityChoice() {
         //Город
         $("[data-test-id=city] .input__control").setValue("Ка");
         $("body > div.popup.popup_direction_bottom-left.popup_target_anchor.popup_size_m.popup_visible.popup_height_adaptive.popup_theme_alfa-on-white.input__popup").shouldBe(visible);
