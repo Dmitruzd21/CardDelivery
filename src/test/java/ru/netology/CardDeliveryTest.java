@@ -20,30 +20,32 @@ public class CardDeliveryTest {
     @BeforeEach
     void setUp() {
         Configuration.browser = "chrome";
+        //Открытие формы
+        open("http://localhost:9999");
     }
 
     @Test
-    private void shouldOrderCardDelivery() {
-        //Открытие формы
-        open("http://localhost:9999");
+    public void shouldOrderCardDelivery() {
         //Город
-        $("[data-test-id=city]").setValue("Москва");
-        //Дата (текущая + 3 дня)
+        $("[data-test-id=city] .input__control").setValue("Москва");
+        //Дата встречи(текущая + 3 дня)
         LocalDate today = LocalDate.now();
-        LocalDate todayPlusThreeDays = today.plusDays(3);
-        DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
-        String formattedDate = todayPlusThreeDays.format(formatter);
-        $("[data-test-id=date]").setValue(formattedDate);
+        LocalDate dayOfMeeting = today.plusDays(4);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String formattedDate = dayOfMeeting.format(formatter);
+        System.out.println(formattedDate);
+        $("[data-test-id=date] .input__control").setValue(formattedDate);
         //Фамилия и имя
-        $("[data-test-id=name]").setValue("Иванов Сергей");
+        $("[data-test-id=name] .input__control").setValue("Иванов Сергей");
         //Телефон
-        $("[data-test-id=phone]").setValue("+791545687354");
+        $("[data-test-id=phone] .input__control").setValue("+79154568735");
         //Чек-бокс
-        $(".checkbox__control").click();
+        $("div form fieldset label").click();
         //Забронировать
         $(Selectors.byText("Забронировать")).click();
         // Всплывающее окно успешно
-        $(Selectors.withText("Успешно")).shouldBe (visible, Duration.ofSeconds(15));
-                //(exactText("Встреча успешно забронирована на" + ""));
+        $(Selectors.withText("Успешно")).shouldBe(visible, Duration.ofSeconds(15));
+        // Окно "Успешно" имеет текст "Встреча успешно забронирована на + дата"
+        $("div.notification__content").shouldHave(exactText("Встреча успешно забронирована на " + formattedDate));
     }
 }
