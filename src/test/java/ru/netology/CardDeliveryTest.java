@@ -35,7 +35,7 @@ public class CardDeliveryTest {
         LocalDate dayOfMeeting = today.plusDays(4);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String formattedDate = dayOfMeeting.format(formatter);
-        $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL+"A");
+        $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=date] .input__control").setValue(formattedDate);
         //Фамилия и имя
@@ -52,18 +52,18 @@ public class CardDeliveryTest {
         $("div.notification__content").shouldHave(exactText("Встреча успешно забронирована на " + formattedDate));
     }
 
-   // Ввод 2 букв в поле город, после чего выбор нужного города из выпадающего списка
+    // Ввод 2 букв в поле город, после чего выбор нужного города из выпадающего списка
     @Test
     public void shouldOrderCardDeliveryWithCityChoice() {
         //Город
         $("[data-test-id=city] .input__control").setValue("Ка");
-        $("body > div.popup.popup_direction_bottom-left.popup_target_anchor.popup_size_m.popup_visible.popup_height_adaptive.popup_theme_alfa-on-white.input__popup").shouldBe(visible);
-        $("body > div.popup.popup_direction_bottom-left.popup_target_anchor.popup_size_m.popup_visible.popup_height_adaptive.popup_theme_alfa-on-white.input__popup > div > div.popup__inner > div > div > div:nth-child(5)").click();
+        $(".popup_theme_alfa-on-white.input__popup").shouldBe(visible);
+        $(".input__popup div div.popup__inner div div div:nth-child(5)").click();
         //Дата встречи(текущая + 4 дня)
         LocalDate today = LocalDate.now();
         LocalDate dayOfMeeting = today.plusDays(4);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL+"A");
+        $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
         String formattedDate = dayOfMeeting.format(formatter);
         $("[data-test-id=date] .input__control").setValue(formattedDate);
